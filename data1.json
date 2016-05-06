@@ -1,0 +1,138 @@
+{
+
+    "name": "Jeb Bush",
+    "children": [{
+        "name": "Jeb Bush",
+        "polling": 22,
+        "children": [{
+            "name": "Jeb Bush",
+            "children": [{
+                "name": "Jeb Bush"
+            }]
+        }]
+    }],
+    "name": "Ben Carson",
+    "children": [{
+        "name": "Ben Carson",
+        "children": [{
+            "name": "Ben Carson",
+            "children": [{
+                "name": "Ben Carson",
+                "children": [{
+                    "name": "Ben Carson"
+                }]
+            }]
+        }]
+    }],
+    "name": "Chris Christie",
+    "children": [{
+        "name": "Chris Christie",
+        "children": [{
+            "name": "Chris Christie",
+            "children": [{
+                "name": "Chris Christie"
+            }]
+        }]
+    }],
+    "name": "Ted Cruz",
+    "children": [{
+        "name": "Ted Cruz",
+        "children": [{
+            "name": "Ted Cruz",
+            "children": [{
+                "name": "Ted Cruz",
+                "children": [{
+                    "name": "Ted Cruz",
+                    "children": [{
+                        "name": "Ted Cruz",
+                        "children": [{
+                            "name": "Ted Cruz"
+                        }]
+                    }]
+                }]
+            }]
+        }]
+    }],
+    "name": "Carly Fiorina",
+    "children": [{
+        "name": "Carly Fiorina",
+        "children": [{
+            "name": "Carly Fiorina",
+            "children": [{
+                "name": "Carly Fiorina"
+            }]
+        }]
+    }],
+    "name": "Lindsey Graham",
+    "name": "Mike Huckabee",
+    "children": [{
+        "name": "Mike Huckabee",
+        "children": [{
+            "name": "Mike Huckabee",
+            "children": [{
+                "name": "Mike Huckabee"
+            }]
+        }]
+    }],
+    "name": "John Kasich",
+    "children": [],
+    "name": "George Pataki",
+    "children": [],
+    "name": "Rand Paul",
+    "children": [{
+        "name": "Rand Paul",
+        "children": [{
+            "name": "Rand Paul",
+            "children": [{
+                "name": "Rand Paul"
+            }]
+        }]
+    }],
+    "name": "Marco Rubio",
+    "children": [{
+        "name": "Marco Rubio",
+        "children": [{
+            "name": "Marco Rubio",
+            "children": [{
+                "name": "Marco Rubio",
+                "children": [{
+                    "name": "Marco Rubio"
+                }]
+            }]
+        }]
+    }],
+    "name": "Rick Santorum",
+    "children": [{
+        "name": "Rick Santorum",
+        "children": [{
+            "name": "Rick Santorum",
+            "children": [{
+                "name": "Rick Santorum"
+            }]
+        }]
+    }],
+    "name": "Donald Trump",
+    "children": [{
+        "name": "Donald Trump",
+        "children": [{
+            "name": "Donald Trump",
+            "children": [{
+                "name": "Donald Trump",
+                "children": [{
+                    "name": "Donald Trump",
+                    "children": [{
+                        "name": "Donald Trump",
+                        "children": [{
+                            "name": "Donald Trump",
+                            "children": [{
+                                "name": "Donald Trump"
+                            }]
+                        }]
+                    }]
+                }]
+            }]
+        }]
+    }],
+    "name": "Bobby Jindall"
+
+}
