@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Import d3.js -->
+    <script src="{{ url_for('static', filename='js/legend.js')}}"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+
+</head>
+
+<body class="grey-text text-darken-2;" style="background: linear-gradient(to bottom right, #191919, #ffffff);">
+    <div class="navbar-fixed">
+        <nav style="background-color:#000000;">
+            <div class="nav-wrapper container">
+                <a href="http://pollstr.io" class="brand-logo">
+                    <img src="{{ url_for('static', filename='img/pollstrLogoWhiteS.png')}}" style="max-height:60px;">
+                </a>
+                <!--<a href="http://pollstr.io" class="brand-logo; right">
+					<img src="{{ url_for('static', filename='img/Imperial_logo.png')}}" style="max-height:60px;">
+				</a>-->
+            </div>
+        </nav>
+    </div>
+
+    <body>
+        <div class="container" id="nomination">
+            <h3 style="color:#eeeeee">The path to the nomination.</h3>
+            <hr>
+            <div id="svgLabels"></div>
+            <div id="tree">
+            </div>
+        </div>
+    </body>
+
+    <script>
+        var margin = {
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 20
+        };
+        var winWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        var width = (winWidth - margin.left - margin.right) * 0.75,
+            height = (winWidth / 2) * 0.55;
+
+        var diagonal = d3.svg.diagonal()
+            .projection(function(d) {
+                return [d.y * width, (d.x * height + 20)]
+            })
+
+        var svg = d3.select("#tree")
+            .append("svg")
+            .attr('width', width)
+            .attr('height', 2 * height)
+
+        var tree = d3.layout.tree()
+
+        d3.json("/data", function(data) {
+            var nodes = tree.nodes(data)
+            var edges = tree.links(nodes)
+
+            var node = svg.selectAll(".node")
+                .data(nodes)
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function(d) {
+                    return 'translate(' + (d.y * width) + ',' + (d.x * height + 10) + ')';
+                })
+
+            node.append("circle")
+                .attr("r", "5")
+                .attr("stroke", "none")
+                .attr("fill", "none")
+
+            node.append("text")
+                .text(function(d) {
+                    return d.name;
+                })
+                .style("font-size", "15px")
+                .style("font-family", "Helvetica")
+                .style("fill", "#b2b2b2")
+                .attr("dy", "-2.5")
+
+            var colors = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6",
+             "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11",
+             "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+
+            var colorScale = d3.scale.linear()
+              .range(colors)
+
+            path = svg.selectAll(".link")
+                .data(edges)
+                .enter()
+                .append("path")
+                .attr("class", "link")
+                .attr("fill", "none")
+                .attr("d", diagonal)
+                .data(colors)
+                .attr("stroke", function(d) {
+                  return (d)
+                })
+                .attr("stroke-width", "10")
+                .attr("stroke-opacity", 0.75)
+
+
+            var totalLength = path.node().getTotalLength();
+
+            path.transition()
+                .attr("stroke-dasharray", totalLength + " " + totalLength)
+                .attr("stroke-dashoffset", totalLength)
+                .transition()
+                .duration(2000)
+                .ease("exponential")
+                .attr("stroke-dashoffset", 0);
+
+            svg.append("line")
+                .attr("x1", "0")
+                .attr("y1", (height + 50))
+                .attr("x2", winWidth)
+                .attr("y2", (height + 50))
+                .attr("stroke", "black")
+
+            svg.append("line")
+                .attr("x1", width / 8)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 8)
+                .attr("y2", 0)
+                .attr("stroke", "#d1d1d1")
+                .attr("stroke-width", 0.5)
+
+            svg.append("line")
+                .attr("x1", width / 8)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 8)
+                .attr("y2", (height + 55))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.5)
+
+            svg.append("line")
+                .attr("x1", 0)
+                .attr("y1", (height + 50))
+                .attr("x2", 0)
+                .attr("y2", (height + 55))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.5)
+
+            svg.append("text")
+                .attr("x", width / 8)
+                .attr("y", (height + 75))
+                .text("November")
+                .style("font-family", "Helvetica")
+                .attr("fill", "#eeeeee")
+
+            svg.append("line")
+                .attr("x1", width / 4)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 4)
+                .attr("y2", 0)
+                .attr("stroke", "#d1d1d1")
+                .attr("stroke-width", 0.5)
+
+            svg.append("line")
+                .attr("x1", width / 4)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 4)
+                .attr("y2", (height + 55))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.5)
+
+            svg.append("text")
+                .attr("x", width / 4)
+                .attr("y", (height + 75))
+                .text("December")
+                .style("font-family", "Helvetica")
+                .attr("fill", "#eeeeee")
+
+            svg.append("line")
+                .attr("x1", width / 2.67)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 2.67)
+                .attr("y2", 0)
+                .attr("stroke", "#d1d1d1")
+                .attr("stroke-width", 0.5)
+
+            svg.append("line")
+                .attr("x1", width / 2.67)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 2.67)
+                .attr("y2", (height + 55))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.5)
+
+            svg.append("text")
+                .attr("x", width / 2.67)
+                .attr("y", (height + 75))
+                .text("January")
+                .style("font-family", "Helvetica")
+                .attr("fill", "#eeeeee")
+
+            svg.append("line")
+                .attr("x1", width / 2)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 2)
+                .attr("y2", 0)
+                .attr("stroke", "#d1d1d1")
+                .attr("stroke-width", 0.5)
+
+            svg.append("line")
+                .attr("x1", width / 2)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 2)
+                .attr("y2", (height + 55))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.5)
+
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", (height + 75))
+                .text("February")
+                .style("font-family", "Helvetica")
+                .attr("fill", "#eeeeee")
+
+            svg.append("line")
+                .attr("x1", width / 1.6)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 1.6)
+                .attr("y2", 0)
+                .attr("stroke", "#d1d1d1")
+                .attr("stroke-width", 0.5)
+
+            svg.append("line")
+                .attr("x1", width / 1.6)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 1.6)
+                .attr("y2", (height + 55))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.5)
+
+            svg.append("text")
+                .attr("x", width / 1.6)
+                .attr("y", (height + 75))
+                .text("March")
+                .style("font-family", "Helvetica")
+                .attr("fill", "#eeeeee")
+
+            svg.append("line")
+                .attr("x1", width / 1.335)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 1.335)
+                .attr("y2", 0)
+                .attr("stroke", "#d1d1d1")
+                .attr("stroke-width", 0.5)
+
+            svg.append("line")
+                .attr("x1", width / 1.335)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 1.335)
+                .attr("y2", (height + 55))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.5)
+
+            svg.append("text")
+                .attr("x", width / 1.335)
+                .attr("y", (height + 75))
+                .text("April")
+                .style("font-family", "Helvetica")
+                .attr("fill", "#eeeeee")
+
+            svg.append("line")
+                .attr("x1", width / 1.141)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 1.141)
+                .attr("y2", 0)
+                .attr("stroke", "#d1d1d1")
+                .attr("stroke-width", 0.5)
+
+            svg.append("line")
+                .attr("x1", width / 1.141)
+                .attr("y1", (height + 50))
+                .attr("x2", width / 1.141)
+                .attr("y2", (height + 55))
+                .attr("stroke", "black")
+                .attr("stroke-width", 0.5)
+
+            svg.append("text")
+                .attr("x", width / 1.141)
+                .attr("y", (height + 75))
+                .text("May")
+                .style("font-family", "Helvetica")
+                .attr("fill", "#eeeeee")
+
+            svgLabels = d3.select("#svgLabels")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height / 4)
+
+            var colors = ["#f8e5e5", "#ecb2b2", "#df807f", "#d24d4c", "#c00100"]
+
+            var sampleNumerical = [5, 10, 20, 30, 40];
+
+            sampleThreshold = d3.scale.linear()
+                .domain(sampleNumerical)
+                .range(colors);
+
+            horizontalLegend = legend()
+                .units("Polling %")
+                .cellWidth(15)
+                .cellHeight(15)
+                .inputScale(sampleThreshold)
+                //.cellStepping(150);
+
+            svgLabels.append("g")
+                .attr("transform", "translate(250,20)")
+                .attr("class", "legend")
+                .call(horizontalLegend);
+
+        });
+    </script>
+
+</html>

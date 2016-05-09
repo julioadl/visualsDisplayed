@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<style>
+    .chordChart {
+        font: 10px sans-serif;
+    }
+
+    .chord path {
+        fill-opacity: .67;
+        stroke: #000;
+        stroke-width: .5px;
+    }
+</style>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Import d3.js -->
+    <script src="{{ url_for('static', filename='js/legend.js')}}"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+
+</head>
+
+<body class="grey-text text-darken-2;" style="background: linear-gradient(to bottom right, #191919, #ffffff);">
+    <div class="navbar-fixed">
+        <nav style="background-color:#000000;">
+            <div class="nav-wrapper container">
+                <a href="http://pollstr.io" class="brand-logo">
+                    <img src="{{ url_for('static', filename='img/pollstrLogoWhiteS.png')}}" style="max-height:60px;">
+                </a>
+                <!--<a href="http://pollstr.io" class="brand-logo; right">
+					<img src="{{ url_for('static', filename='img/Imperial_logo.png')}}" style="max-height:60px;">
+				</a>-->
+            </div>
+        </nav>
+    </div>
+
+    <body>
+        <div class="container">
+            <h3 style="color:#eeeeee">The Donald</h3>
+            <hr>
+            <div id="chordChart">
+            </div>
+    </body>
+
+    <script>
+        // From http://mkweb.bcgsc.ca/circos/guide/tables/
+        var matrix = [
+            [0, 0, 0, 0, 11, 17, 9, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 24, 0],
+            [0, 0, 0, 0, 0, 18, 0, 0, 20],
+            [15, 0, 0, 0, 0, 0, 0, 0, 0],
+            [7, 0, 9, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 3, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 13, 0, 0, 0, 0, 0],
+        ];
+
+        var chord = d3.layout.chord()
+            .padding(.05)
+            .sortSubgroups(d3.descending)
+            .matrix(matrix);
+
+        var margin = {
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 20
+        };
+        var winWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        var width = (winWidth - margin.left - margin.right) * 0.75,
+            height = (winWidth / 2) * 0.55;
+
+        var innerRadius = Math.min((width), height) * .41,
+            outerRadius = innerRadius * 1.1;
+
+        //        var width = 960,
+        //            height = 500,
+        //            innerRadius = Math.min(width, height) * .41,
+        //            outerRadius = innerRadius * 1.1;
+
+        var fill = d3.scale.ordinal()
+            .domain(d3.range(4))
+            .range(["#bfcbe9", "#abb6d1", "#98a2ba", "#858ea3", "#e78b9d", "#e2738a", "#de5c76", "#d94562", "#d42e4f"]);
+        //["#bfcbe9", "#abb6d1", "#98a2ba", "#858ea3", "#e78b9d", "#e2738a", "#de5c76", "#d94562", "#d42e4f"]
+        var svg = d3.select("#chordChart").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        svg.append("g").selectAll("path")
+            .data(chord.groups)
+            .enter().append("path")
+            .style("fill", function(d) {
+                return fill(d.index);
+            })
+            .style("stroke", function(d) {
+                return fill(d.index);
+            })
+            .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
+            .on("mouseover", fade(.1))
+            .on("mouseout", fade(1));
+
+        var ticks = svg.append("g").selectAll("g")
+            .data(chord.groups)
+            .enter().append("g").selectAll("g")
+            .data(groupTicks)
+            .enter().append("g")
+            .attr("transform", function(d) {
+                return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")" + "translate(" + outerRadius + ",0)";
+            });
+
+        ticks.append("line")
+            .attr("x1", 1)
+            .attr("y1", 0)
+            .attr("x2", 5)
+            .attr("y2", 0)
+            .style("stroke", "#000");
+
+        svg.append("text")
+            .attr("x", 200)
+            .attr("y", -150)
+            .text("Fallas")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("text")
+            .attr("x", 250)
+            .attr("y", -5)
+            .text("Redes Sociales Ilimitadas")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("text")
+            .attr("x", 225)
+            .attr("y", 100)
+            .text("Saldo")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("text")
+            .attr("x", -75)
+            .attr("y", 250)
+            .text("Ofertas")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("text")
+            .attr("x", -430)
+            .attr("y", 75)
+            .text("Fallas con mensajes y llamadas")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("text")
+            .attr("x", -275)
+            .attr("y", -100)
+            .text("Internet")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("text")
+            .attr("x", -350)
+            .attr("y", -160)
+            .text("Redes Sociales Ilimitadas")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("text")
+            .attr("x", -175)
+            .attr("y", -180)
+            .text("Saldo")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("text")
+            .attr("x", -100)
+            .attr("y", -230)
+            .text("Ofertas")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg.append("g")
+            .attr("class", "chord")
+            .selectAll("path")
+            .data(chord.chords)
+            .enter().append("path")
+            .attr("d", d3.svg.chord().radius(innerRadius))
+            .style("fill", function(d) {
+                return fill(d.target.index);
+            })
+            .style("opacity", 1);
+
+        // Returns an array of tick angles and labels, given a group.
+        function groupTicks(d) {
+            var k = (d.endAngle - d.startAngle) / d.value;
+            return d3.range(0, d.value, 1000).map(function(v, i) {
+                return {
+                    angle: v * k + d.startAngle,
+                };
+            });
+        }
+
+        // Returns an event handler for fading a given chord group.
+        function fade(opacity) {
+            return function(g, i) {
+                svg.selectAll(".chord path")
+                    .filter(function(d) {
+                        return d.source.index != i && d.target.index != i;
+                    })
+                    .transition()
+                    .style("opacity", opacity);
+            };
+        }
+
+        svgLabels = d3.select("#Labels").append("svg")
+            .attr("width", width)
+            .attr("height", height / 8)
+
+        svgLabels.append("rect")
+            .attr("x", 200)
+            .attr("y", 5)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "#bfcbe9")
+
+        svgLabels.append("text")
+            .attr("x", 230)
+            .attr("y", 20)
+            .text("Nikko")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+        svgLabels.append("rect")
+            .attr("x", 400)
+            .attr("y", 5)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "#e78b9d")
+
+        svgLabels.append("text")
+            .attr("x", 430)
+            .attr("y", 20)
+            .text("Clientes")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+    </script>
+
+</html>

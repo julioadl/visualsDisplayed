@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Import d3.js -->
+    <script src="{{ url_for('static', filename='js/legend.js')}}"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+
+</head>
+
+<body class="grey-text text-darken-2;" style="background: linear-gradient(to bottom right, #191919, #ffffff);">
+    <div class="navbar-fixed">
+        <nav style="background-color:#000000;">
+            <div class="nav-wrapper container">
+                <a href="http://pollstr.io" class="brand-logo">
+                    <img src="{{ url_for('static', filename='img/pollstrLogoWhiteS.png')}}" style="max-height:60px;">
+                </a>
+                <!--<a href="http://pollstr.io" class="brand-logo; right">
+					<img src="{{ url_for('static', filename='img/Imperial_logo.png')}}" style="max-height:60px;">
+				</a>-->
+            </div>
+        </nav>
+    </div>
+
+    <body>
+        <div class="container">
+                <img src="{{ url_for('static', filename='img/republican.svg')}}" style="height:150px; margin-top:20%; margin-bottom:100%; margin-left:40%; margin-right:30%"></img>
+                <!--<a href="#nomination" class="btn" style="background-color:#c00100">Next</a>-->
+        </div>
+    </body>
+</html>
