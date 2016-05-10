@@ -46,26 +46,28 @@
         <!--<div class="container">-->
         <h3 style="color:#eeeeee">The Campaign</h3>
         <hr>
-        <div class="row">
+        <div class="row" style="margin-bottom:1000px">
+            <center>
+                <div id="Labels"></div>
+            </center>
             <div class="col m6 m6">
-                <h4>Topics</h4>
                 <div id="chordChart"></div>
             </div>
             <div class="col s12 m6">
-                <h4>Sentiment</h4>
-                <div id="sentiment1"></div>
-            </div>
-        </div>
-        <div class="row" style="margin-top:300px; margin-bottom:300px">
-            <div class="col s12 m6">
-              <div id="Labels"></div>
                 <div id="chordChart2"></div>
             </div>
+        </div>
+        <!--<div class="row" style="margin-top:300px; margin-bottom:300px">
+            <center>
+                <div id="Labels2"></div>
+            </center>
             <div class="col s12 m6">
-              <div id="Labels2"></div>
+                <div id="sentiment1"></div>
+            </div>
+            <div class="col s12 m6">
                 <div id="sentiment2"></div>
             </div>
-        </div>
+        </div>-->
     </body>
 
     <script>
@@ -141,7 +143,7 @@
             .attr("x", (outerRadius * 0.85))
             .attr("y", -(outerRadius * 0.7))
             .text('"Energized", "Bless", "Protect"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
@@ -157,39 +159,39 @@
             .attr("x", (outerRadius * 0.5))
             .attr("y", (outerRadius))
             .text('"Slashing", "Cruz"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg.append("text")
-            .attr("x", (outerRadius * 0.05))
+            .attr("x", -(outerRadius * 0.25))
             .attr("y", (outerRadius * 1.1))
             .text('"Stopping", "Terminate"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg.append("text")
-            .attr("x", -430)
-            .attr("y", 75)
+            .attr("x", -(outerRadius * 1.25))
+            .attr("y", (outerRadius * 0.75))
             .text('"Worst"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg.append("text")
-            .attr("x", -275)
-            .attr("y", -100)
+            .attr("x", -(outerRadius * 0.8))
+            .attr("y", -(outerRadius))
             .text('"Bigger"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg.append("text")
             .attr("x", 0)
-            .attr("y", - (outerRadius * 1.05))
+            .attr("y", -(outerRadius * 1.05))
             .text("The Donald")
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.075)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
@@ -231,104 +233,109 @@
             .attr("height", height / 8)
 
         svgLabels.append("rect")
-            .attr("x", 200)
-            .attr("y", 5)
-            .attr("width", 15)
-            .attr("height", 15)
+            .attr("x", (outerRadius * 0.65))
+            .attr("y", (outerRadius * 0.065) / 4)
+            .attr("width", (outerRadius * 0.065))
+            .attr("height", (outerRadius * 0.065))
             .style("fill", "#fef1f1")
 
-        ["#fef1f1", "#fcc7c7", "#faabab", "#f98f8f", "#f87373", "#de5c76", "#d94562", "#d42e4f"]
         svgLabels.append("text")
-            .attr("x", 230)
-            .attr("y", 20)
+            .attr("x", (outerRadius * 0.65 * 1.15))
+            .attr("y", (outerRadius * 0.065))
             .text("Candidate")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
 
         svgLabels.append("rect")
-            .attr("x", 400)
-            .attr("y", 5)
-            .attr("width", 15)
-            .attr("height", 15)
+            .attr("x", (outerRadius * 0.65) * 2)
+            .attr("y", (outerRadius * 0.065) / 4)
+            .attr("width", (outerRadius * 0.065))
+            .attr("height", (outerRadius * 0.065))
             .style("fill", "#fcc7c7")
 
         svgLabels.append("text")
-            .attr("x", 430)
-            .attr("y", 20)
+            .attr("x", (outerRadius * 0.65) * 2.15)
+            .attr("y", (outerRadius * 0.065))
             .text("America")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
 
         svgLabels.append("rect")
-            .attr("x", 600)
-            .attr("y", 5)
-            .attr("width", 15)
-            .attr("height", 15)
+            .attr("x", (outerRadius * 0.65) * 3)
+            .attr("y", (outerRadius * 0.065) / 4)
+            .attr("width", (outerRadius * 0.065))
+            .attr("height", (outerRadius * 0.065))
             .style("fill", "#faabab")
 
         svgLabels.append("text")
-            .attr("x", 630)
-            .attr("y", 20)
+            .attr("x", (outerRadius * 0.65) * 3.15)
+            .attr("y", (outerRadius * 0.065))
             .text("Clinton")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
 
         svgLabels.append("rect")
-            .attr("x", 800)
-            .attr("y", 5)
-            .attr("width", 15)
-            .attr("height", 15)
+            .attr("x", (outerRadius * 0.65) * 4)
+            .attr("y", (outerRadius * 0.065) / 4)
+            .attr("width", (outerRadius * 0.065))
+            .attr("height", (outerRadius * 0.065))
             .style("fill", "#f98f8f")
 
         svgLabels.append("text")
-            .attr("x", 830)
-            .attr("y", 20)
+            .attr("x", (outerRadius * 0.65) * 4.15)
+            .attr("y", (outerRadius * 0.065))
             .text("Campaign")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
 
         svgLabels.append("rect")
-            .attr("x", 200)
-            .attr("y", 35)
-            .attr("width", 15)
-            .attr("height", 15)
+            .attr("x", (outerRadius * 0.65))
+            .attr("y", (outerRadius * 0.65) / 5.7)
+            .attr("width", (outerRadius * 0.065))
+            .attr("height", (outerRadius * 0.065))
             .style("fill", "#f87373")
 
-        ["#fef1f1", "#fcc7c7", "#faabab", "#f98f8f", "#f87373", "#de5c76", "#d94562", "#d42e4f"]
         svgLabels.append("text")
-            .attr("x", 230)
-            .attr("y", 50)
+            .attr("x", (outerRadius * 0.65) * 1.15)
+            .attr("y", (outerRadius * 0.65) / 4)
             .text("Obamacare")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
 
         svgLabels.append("rect")
-            .attr("x", 400)
-            .attr("y", 35)
-            .attr("width", 15)
-            .attr("height", 15)
+            .attr("x", (outerRadius * 0.65) * 2)
+            .attr("y", (outerRadius * 0.65) / 5.7)
+            .attr("width", (outerRadius * 0.065))
+            .attr("height", (outerRadius * 0.065))
             .style("fill", "#de5c76")
 
         svgLabels.append("text")
-            .attr("x", 430)
-            .attr("y", 50)
+            .attr("x", (outerRadius * 0.65) * 2.15)
+            .attr("y", (outerRadius * 0.65) / 4)
             .text("President Obama")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
 
         svgLabels.append("rect")
-            .attr("x", 600)
-            .attr("y", 35)
-            .attr("width", 15)
-            .attr("height", 15)
+            .attr("x", (outerRadius * 0.65) * 3)
+            .attr("y", (outerRadius * 0.65) / 5.7)
+            .attr("width", (outerRadius * 0.065))
+            .attr("height", (outerRadius * 0.065))
             .style("fill", "#d94562")
 
         svgLabels.append("text")
-            .attr("x", 630)
-            .attr("y", 50)
+            .attr("x", (outerRadius * 0.65) * 3.15)
+            .attr("y", (outerRadius * 0.65) / 4)
             .text("Republicans and the GOP")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
 
 
         //Chord two
@@ -364,8 +371,8 @@
                 return fill(d.index);
             })
             .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
-            .on("mouseover", fade(.1))
-            .on("mouseout", fade(1));
+            .on("mouseover", fade2(.1))
+            .on("mouseout", fade2(1));
 
         var ticks2 = svg2.append("g").selectAll("g")
             .data(chord.groups)
@@ -384,64 +391,64 @@
             .style("stroke", "#000");
 
         svg2.append("text")
-            .attr("x", 200)
-            .attr("y", -150)
+            .attr("x", (outerRadius * 0.75))
+            .attr("y", -(outerRadius * 0.75))
             .text('"Bless"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg2.append("text")
-            .attr("x", 250)
-            .attr("y", -5)
+            .attr("x", (outerRadius * 1.1))
+            .attr("y", 0)
             .text('"Blue"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg2.append("text")
-            .attr("x", -75)
-            .attr("y", 250)
+            .attr("x", (outerRadius * 0.95))
+            .attr("y", (outerRadius * 0.6))
             .text('"Up-coming", "hard-fought"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg2.append("text")
-            .attr("x", -430)
-            .attr("y", 75)
+            .attr("x", (outerRadius * 0.05))
+            .attr("y", (outerRadius * 1.1))
             .text('"Defeating", "Defunt"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg2.append("text")
-            .attr("x", -275)
-            .attr("y", -100)
+            .attr("x", -(outerRadius * 1.25))
+            .attr("y", (outerRadius * 0.5))
             .text('"Stop", "Fight"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg2.append("text")
-            .attr("x", -175)
-            .attr("y", -180)
+            .attr("x", -(outerRadius))
+            .attr("y", -(outerRadius * 0.75))
             .text('"Liberty"')
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.05)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg2.append("text")
-            .attr("x", -100)
-            .attr("y", -230)
+            .attr("x", 0)
+            .attr("y", -(outerRadius * 1.05))
             .text("Ted Cruz")
-            .style("font-size", "15px")
+            .style("font-size", outerRadius * 0.075)
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg2.append("g")
             .attr("class", "chord")
-            .selectAll("path2")
+            .selectAll("path")
             .data(chord.chords)
             .enter().append("path")
             .attr("d", d3.svg.chord().radius(innerRadius))
@@ -461,8 +468,9 @@
         //  }
 
         // Returns an event handler for fading a given chord group.
-        function fade(opacity) {
+        function fade2(opacity) {
             return function(g, i) {
+
                 svg2.selectAll(".chord path")
                     .filter(function(d) {
                         return d.source.index != i && d.target.index != i;
@@ -477,17 +485,17 @@
             .attr("height", height / 8)
 
         svgLabels2.append("rect")
-            .attr("x", 200)
+            .attr("x", (outerRadius * 0.65))
             .attr("y", 5)
             .attr("width", 15)
             .attr("height", 15)
             .style("fill", "green")
 
         svgLabels2.append("text")
-            .attr("x", 230)
+            .attr("x", (outerRadius * 0.75))
             .attr("y", 20)
             .text("Positive")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
 
         svgLabels2.append("rect")
@@ -501,7 +509,7 @@
             .attr("x", 430)
             .attr("y", 20)
             .text("Neutral")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
 
         svgLabels2.append("rect")
@@ -515,7 +523,7 @@
             .attr("x", 630)
             .attr("y", 20)
             .text("Negative")
-            .style("font-size", "20px")
+            .style("font-size", (outerRadius * 0.065))
             .style("font-family", "helvetica")
 
         //Sentiment Analysis
