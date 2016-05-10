@@ -44,24 +44,40 @@
 
     <body>
         <!--<div class="container">-->
-            <h3 style="color:#eeeeee">The Donald</h3>
-            <hr>
-            <div id="chordChart">
-            <!--</div>-->
+        <h3 style="color:#eeeeee">The Campaign</h3>
+        <hr>
+        <div class="row">
+            <div class="col m6 m6">
+                <h4>Topics</h4>
+                <div id="chordChart"></div>
+            </div>
+            <div class="col s12 m6">
+                <h4>Sentiment</h4>
+                <div id="sentiment1"></div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:300px; margin-bottom:300px">
+            <div class="col s12 m6">
+              <div id="Labels"></div>
+                <div id="chordChart2"></div>
+            </div>
+            <div class="col s12 m6">
+              <div id="Labels2"></div>
+                <div id="sentiment2"></div>
+            </div>
+        </div>
     </body>
 
     <script>
         // From http://mkweb.bcgsc.ca/circos/guide/tables/
         var matrix = [
-            [0, 0, 0, 0, 11, 17, 9, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 24, 0],
-            [0, 0, 0, 0, 0, 18, 0, 0, 20],
-            [15, 0, 0, 0, 0, 0, 0, 0, 0],
-            [7, 0, 9, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 3, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 13, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [51, 0, 0, 0, 0, 0, 0],
+            [29, 0, 0, 0, 0, 0, 0],
+            [20, 0, 0, 0, 0, 0, 0],
+            [20, 0, 0, 0, 0, 0, 0],
+            [71, 0, 0, 0, 0, 0, 0],
+            [27, 0, 0, 0, 0, 0, 0]
         ];
 
         var chord = d3.layout.chord()
@@ -76,20 +92,15 @@
             left: 20
         };
         var winWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var width = (winWidth - margin.left - margin.right) * 0.75,
+        var width = (winWidth - margin.left - margin.right) * 0.5,
             height = (winWidth / 2) * 0.55;
 
         var innerRadius = Math.min((width), height) * .41,
             outerRadius = innerRadius * 1.1;
 
-        //        var width = 960,
-        //            height = 500,
-        //            innerRadius = Math.min(width, height) * .41,
-        //            outerRadius = innerRadius * 1.1;
-
         var fill = d3.scale.ordinal()
             .domain(d3.range(4))
-            .range(["#bfcbe9", "#abb6d1", "#98a2ba", "#858ea3", "#e78b9d", "#e2738a", "#de5c76", "#d94562", "#d42e4f"]);
+            .range(["#fef1f1", "#fcc7c7", "#faabab", "#f98f8f", "#f87373", "#de5c76", "#d94562", "#d42e4f"]);
         //["#bfcbe9", "#abb6d1", "#98a2ba", "#858ea3", "#e78b9d", "#e2738a", "#de5c76", "#d94562", "#d42e4f"]
         var svg = d3.select("#chordChart").append("svg")
             .attr("width", width)
@@ -127,33 +138,33 @@
             .style("stroke", "#000");
 
         svg.append("text")
-            .attr("x", 200)
-            .attr("y", -150)
-            .text("Fallas")
+            .attr("x", (outerRadius * 0.85))
+            .attr("y", -(outerRadius * 0.7))
+            .text('"Energized", "Bless", "Protect"')
             .style("font-size", "15px")
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg.append("text")
-            .attr("x", 250)
-            .attr("y", -5)
-            .text("Redes Sociales Ilimitadas")
+            .attr("x", (outerRadius))
+            .attr("y", (outerRadius * 0.35))
+            .text('"Goofy", "Corrupt"')
             .style("font-size", "15px")
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg.append("text")
-            .attr("x", 225)
-            .attr("y", 100)
-            .text("Saldo")
+            .attr("x", (outerRadius * 0.5))
+            .attr("y", (outerRadius))
+            .text('"Slashing", "Cruz"')
             .style("font-size", "15px")
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg.append("text")
-            .attr("x", -75)
-            .attr("y", 250)
-            .text("Ofertas")
+            .attr("x", (outerRadius * 0.05))
+            .attr("y", (outerRadius * 1.1))
+            .text('"Stopping", "Terminate"')
             .style("font-size", "15px")
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
@@ -161,7 +172,7 @@
         svg.append("text")
             .attr("x", -430)
             .attr("y", 75)
-            .text("Fallas con mensajes y llamadas")
+            .text('"Worst"')
             .style("font-size", "15px")
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
@@ -169,31 +180,15 @@
         svg.append("text")
             .attr("x", -275)
             .attr("y", -100)
-            .text("Internet")
+            .text('"Bigger"')
             .style("font-size", "15px")
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
 
         svg.append("text")
-            .attr("x", -350)
-            .attr("y", -160)
-            .text("Redes Sociales Ilimitadas")
-            .style("font-size", "15px")
-            .style("font-family", "helvetica")
-            .style("fill", "#eeeeee")
-
-        svg.append("text")
-            .attr("x", -175)
-            .attr("y", -180)
-            .text("Saldo")
-            .style("font-size", "15px")
-            .style("font-family", "helvetica")
-            .style("fill", "#eeeeee")
-
-        svg.append("text")
-            .attr("x", -100)
-            .attr("y", -230)
-            .text("Ofertas")
+            .attr("x", 0)
+            .attr("y", - (outerRadius * 1.05))
+            .text("The Donald")
             .style("font-size", "15px")
             .style("font-family", "helvetica")
             .style("fill", "#eeeeee")
@@ -240,12 +235,13 @@
             .attr("y", 5)
             .attr("width", 15)
             .attr("height", 15)
-            .style("fill", "#bfcbe9")
+            .style("fill", "#fef1f1")
 
+        ["#fef1f1", "#fcc7c7", "#faabab", "#f98f8f", "#f87373", "#de5c76", "#d94562", "#d42e4f"]
         svgLabels.append("text")
             .attr("x", 230)
             .attr("y", 20)
-            .text("Nikko")
+            .text("Candidate")
             .style("font-size", "20px")
             .style("font-family", "helvetica")
 
@@ -254,14 +250,476 @@
             .attr("y", 5)
             .attr("width", 15)
             .attr("height", 15)
-            .style("fill", "#e78b9d")
+            .style("fill", "#fcc7c7")
 
         svgLabels.append("text")
             .attr("x", 430)
             .attr("y", 20)
-            .text("Clientes")
+            .text("America")
             .style("font-size", "20px")
             .style("font-family", "helvetica")
+
+        svgLabels.append("rect")
+            .attr("x", 600)
+            .attr("y", 5)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "#faabab")
+
+        svgLabels.append("text")
+            .attr("x", 630)
+            .attr("y", 20)
+            .text("Clinton")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+        svgLabels.append("rect")
+            .attr("x", 800)
+            .attr("y", 5)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "#f98f8f")
+
+        svgLabels.append("text")
+            .attr("x", 830)
+            .attr("y", 20)
+            .text("Campaign")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+        svgLabels.append("rect")
+            .attr("x", 200)
+            .attr("y", 35)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "#f87373")
+
+        ["#fef1f1", "#fcc7c7", "#faabab", "#f98f8f", "#f87373", "#de5c76", "#d94562", "#d42e4f"]
+        svgLabels.append("text")
+            .attr("x", 230)
+            .attr("y", 50)
+            .text("Obamacare")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+        svgLabels.append("rect")
+            .attr("x", 400)
+            .attr("y", 35)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "#de5c76")
+
+        svgLabels.append("text")
+            .attr("x", 430)
+            .attr("y", 50)
+            .text("President Obama")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+        svgLabels.append("rect")
+            .attr("x", 600)
+            .attr("y", 35)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "#d94562")
+
+        svgLabels.append("text")
+            .attr("x", 630)
+            .attr("y", 50)
+            .text("Republicans and the GOP")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+
+        //Chord two
+
+        var matrix2 = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [45, 0, 0, 0, 0, 0, 0],
+            [2, 0, 0, 0, 0, 0, 0],
+            [25, 0, 0, 0, 0, 0, 0],
+            [26, 0, 0, 0, 0, 0, 0],
+            [43, 0, 0, 0, 0, 0, 0],
+            [50, 0, 0, 0, 0, 0, 0]
+        ];
+
+        var chord = d3.layout.chord()
+            .padding(.05)
+            .sortSubgroups(d3.descending)
+            .matrix(matrix2);
+
+        var svg2 = d3.select("#chordChart2").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        svg2.append("g").selectAll("path")
+            .data(chord.groups)
+            .enter().append("path")
+            .style("fill", function(d) {
+                return fill(d.index);
+            })
+            .style("stroke", function(d) {
+                return fill(d.index);
+            })
+            .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
+            .on("mouseover", fade(.1))
+            .on("mouseout", fade(1));
+
+        var ticks2 = svg2.append("g").selectAll("g")
+            .data(chord.groups)
+            .enter().append("g").selectAll("g")
+            .data(groupTicks)
+            .enter().append("g")
+            .attr("transform", function(d) {
+                return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")" + "translate(" + outerRadius + ",0)";
+            });
+
+        ticks2.append("line")
+            .attr("x1", 1)
+            .attr("y1", 0)
+            .attr("x2", 5)
+            .attr("y2", 0)
+            .style("stroke", "#000");
+
+        svg2.append("text")
+            .attr("x", 200)
+            .attr("y", -150)
+            .text('"Bless"')
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg2.append("text")
+            .attr("x", 250)
+            .attr("y", -5)
+            .text('"Blue"')
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg2.append("text")
+            .attr("x", -75)
+            .attr("y", 250)
+            .text('"Up-coming", "hard-fought"')
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg2.append("text")
+            .attr("x", -430)
+            .attr("y", 75)
+            .text('"Defeating", "Defunt"')
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg2.append("text")
+            .attr("x", -275)
+            .attr("y", -100)
+            .text('"Stop", "Fight"')
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg2.append("text")
+            .attr("x", -175)
+            .attr("y", -180)
+            .text('"Liberty"')
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg2.append("text")
+            .attr("x", -100)
+            .attr("y", -230)
+            .text("Ted Cruz")
+            .style("font-size", "15px")
+            .style("font-family", "helvetica")
+            .style("fill", "#eeeeee")
+
+        svg2.append("g")
+            .attr("class", "chord")
+            .selectAll("path2")
+            .data(chord.chords)
+            .enter().append("path")
+            .attr("d", d3.svg.chord().radius(innerRadius))
+            .style("fill", function(d) {
+                return fill(d.target.index);
+            })
+            .style("opacity", 1);
+
+        // Returns an array of tick angles and labels, given a group.
+        //function groupTicks(d) {
+        //    var k = (d.endAngle - d.startAngle) / d.value;
+        //  return d3.range(0, d.value, 1000).map(function(v, i) {
+        //  return {
+        //        angle: v * k + d.startAngle,
+        //      };
+        //    });
+        //  }
+
+        // Returns an event handler for fading a given chord group.
+        function fade(opacity) {
+            return function(g, i) {
+                svg2.selectAll(".chord path")
+                    .filter(function(d) {
+                        return d.source.index != i && d.target.index != i;
+                    })
+                    .transition()
+                    .style("opacity", opacity);
+            };
+        }
+
+        svgLabels2 = d3.select("#Labels2").append("svg")
+            .attr("width", width)
+            .attr("height", height / 8)
+
+        svgLabels2.append("rect")
+            .attr("x", 200)
+            .attr("y", 5)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "green")
+
+        svgLabels2.append("text")
+            .attr("x", 230)
+            .attr("y", 20)
+            .text("Positive")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+        svgLabels2.append("rect")
+            .attr("x", 400)
+            .attr("y", 5)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "yellow")
+
+        svgLabels2.append("text")
+            .attr("x", 430)
+            .attr("y", 20)
+            .text("Neutral")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+        svgLabels2.append("rect")
+            .attr("x", 600)
+            .attr("y", 5)
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", "red")
+
+        svgLabels2.append("text")
+            .attr("x", 630)
+            .attr("y", 20)
+            .text("Negative")
+            .style("font-size", "20px")
+            .style("font-family", "helvetica")
+
+        //Sentiment Analysis
+
+        var radius = Math.min((width), height) / 3; // El radio del círculo es la mitad del valor más chico entre la altura y el ancho
+
+        var donutWidth = radius * .25; // Para hacer que la dona se vea bien, defino el grueso en función del ancho total.
+
+        var centery = height / 2,
+            centerx1 = width / 2, //centro de la dona 1
+            centerx2 = width / 4; //centro de la dona 2
+
+        var legendRectSize = 15,
+            legendSpacing = 5; //tamaño de la leyenda
+
+        var dataset = [{
+            label: 'Positive comments',
+            count: 0
+        }, {
+            label: 'Neutral comments',
+            count: 8090
+        }, {
+            label: 'Negative comments',
+            count: 1187
+        }]; //dataset de comentarios positivos, neutrales y negativos generado por 3 valores random enteros entre 1 y 1000
+
+        var dataset2 = [{
+            label: 'Positive comments',
+            count: 0
+        }, {
+            label: 'Neutral comments',
+            count: 7022
+        }, {
+            label: 'Negative comments',
+            count: 941
+        }]; //dataset de comentarios positivos, neutrales y negativos generado por 3 valores random enteros entre 1 y 1000
+
+
+        var color = d3.scale.ordinal()
+            .range(['#009639', '#ffbf00', '#f9152f'])
+
+        var svgSentiment1 = d3.select('#sentiment1')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .append('g')
+            .attr("transform", "translate(" + centerx1 + "," + centery + ")"); //inserta el chart en el div del html que tiene como id "chart"
+
+        var svgSentiment2 = d3.select('#sentiment2')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .append('g')
+            .attr("transform", "translate(" + centerx1 + "," + centery + ")"); //inserta el chart en el div del html que tiene como id "chart"
+
+        var svgLegendSentiment = d3.select('#legend')
+            .append('svg')
+            .attr('width', width / 2)
+            .attr('height', height)
+            .append('g')
+
+        var svgLegendSentiment2 = d3.select('#legend')
+            .append('svg')
+            .attr('width', width / 2)
+            .attr('height', height)
+            .append('g')
+
+        var arc = d3.svg.arc()
+            .innerRadius(radius - donutWidth)
+            .outerRadius(radius); //inserta los arcos
+
+        var pie = d3.layout.pie()
+            .value(function(d) {
+                return d.count;
+            })
+            .sort(null); //pasa los valores del dataset a un layout de pie
+
+        var pathSentiment = svgSentiment1.selectAll('path')
+            .data(pie(dataset))
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', function(d, i) {
+                return color(d.data.label);
+            }); //mete los paths que van a dibujar los arcos y les pone los colores correspondientes.
+
+        pathSentiment.transition()
+            .ease("bounce")
+            .duration(1350)
+            .attrTween("d", tweenPie); //Inserta la transición a los arcos. No está encadenada a la selección anterior para que se guarde esa selección y pueda después llamarla para el mouseover.
+
+        var pathSentiment2 = svgSentiment2.selectAll('path2')
+            .data(pie(dataset2))
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', function(d, i) {
+                return color(d.data.label);
+            }); //mete los paths que van a dibujar los arcos y les pone los colores correspondientes.
+
+        pathSentiment2.transition()
+            .ease("bounce")
+            .duration(1350)
+            .delay(0)
+            .attrTween("d", tweenPie); //Inserta la transición a los arcos. No está encadenada a la selección anterior para que se guarde esa selección y pueda después llamarla para el mouseover.
+
+        function tweenPie(b) {
+            var i = d3.interpolate({
+                startAngle: 0 * 2 * Math.PI,
+                endAngle: .0 * 2 * Math.PI
+            }, b);
+            return function(t) {
+                return arc(i(t));
+            };
+        } //Esta es la función de animación
+
+        var legendSentiment = svgLegendSentiment.selectAll('.legend')
+            .data(color.domain())
+            .enter()
+            .append('g')
+            .attr('class', 'legend')
+            .attr('transform', function(d, i) {
+                var horz = 0;
+                var vert = (i * legendRectSize) + legendSpacing + centery;
+                return 'translate(' + horz + ',' + vert + ')';
+            }); //inserta la leyenda
+
+        legendSentiment.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)
+            .style('fill', color)
+            .style('stroke', color); //genera los indicadores rectangulares de colores para la leyenda
+
+        legendSentiment.append('text')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .text(function(d) {
+                return d;
+            }); //genera las etiquetas de la leyenda
+
+        pathSentiment.on('mouseover', function(d) {
+            var total = d3.sum(dataset.map(function(d) {
+                return d.count;
+            }));
+            var percent = Math.round(1000 * d.data.count / total) / 10;
+            tooltip.select('.count').html(d.data.count);
+            tooltip.select('.label').html(d.data.label);
+            tooltip.select('.percent').html(percent + '%');
+            tooltip.style('display', 'block');
+        }); //calcula el porcentaje redondeado a un decimal y le asigna la etiqueta correspondiente para el tooltip
+
+        pathSentiment2.on('mouseover', function(d) {
+            var total2 = d3.sum(dataset2.map(function(d) {
+                return d.count;
+            }));
+            var percent2 = Math.round(1000 * d.data.count / total2) / 10;
+            tooltip2.select('.count').html(d.data.count);
+            tooltip2.select('.label').html(d.data.label);
+            tooltip2.select('.percent').html(percent2 + '%');
+            tooltip2.style('display', 'block');
+        }); //calcula el porcentaje redondeado a un decimal y le asigna la etiqueta correspondiente para el tooltip
+
+
+        pathSentiment.on('mouseout', function() {
+            tooltip.style('display', 'none');
+        }); //desaparece el tooltip cuando el mouse sale del arco
+
+        pathSentiment2.on('mouseout', function() {
+            tooltip2.style('display', 'none');
+        }); //desaparece el tooltip cuando el mouse sale del arco
+
+        pathSentiment.on('mouseout', function() {
+            tooltip.style('display', 'none');
+        }); //desaparece el tooltip cuando el mouse sale del arco
+
+        pathSentiment2.on('mouseout', function() {
+            tooltip2.style('display', 'none');
+        }); //desaparece el tooltip cuando el mouse sale del arco
+
+        var tooltip = d3.select('#sentiment1')
+            .append('div')
+            .attr('class', 'tooltip'); //crea el tooltip y las tres siguientes le agregan los datos correspondientes
+
+        var tooltip2 = d3.select('#sentiment2')
+            .append('div')
+            .attr('class', 'tooltip2'); //crea el tooltip y las tres siguientes le agregan los datos correspondientes
+
+        tooltip.append('div')
+            .attr('class', 'count');
+
+        tooltip2.append('div')
+            .attr('class', 'count');
+
+        tooltip.append('div')
+            .attr('class', 'label');
+
+        tooltip2.append('div')
+            .attr('class', 'label');
+
+        tooltip.append('div')
+            .attr('class', 'percent');
+
+        tooltip2.append('div')
+            .attr('class', 'percent');
     </script>
 
 </html>

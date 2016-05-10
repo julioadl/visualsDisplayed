@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css')}}" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Import d3.js -->
+    <script src="{{ url_for('static', filename='js/legend.js')}}"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+
+</head>
+
+<body class="grey-text text-darken-2;" style="background: linear-gradient(to bottom right, #191919, #ffffff);">
+    <div class="navbar-fixed">
+        <nav style="background-color:#000000;">
+            <div class="nav-wrapper container">
+                <a href="http://pollstr.io" class="brand-logo">
+                    <img src="{{ url_for('static', filename='img/pollstrLogoWhiteS.png')}}" style="max-height:60px;">
+                </a>
+                <!--<a href="http://pollstr.io" class="brand-logo; right">
+					<img src="{{ url_for('static', filename='img/Imperial_logo.png')}}" style="max-height:60px;">
+				</a>-->
+            </div>
+        </nav>
+    </div>
+
+    <body>
+        <h3 style="color:#eeeeee">Mention networks.</h3>
+        <hr>
+        <div id="mentions"></div>
+    </body>
+
+    <script>
+        var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+        var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+        var color = d3.scale.category20();
+
+        var force = d3.layout.force()
+            .charge(0)
+            .linkDistance(400)
+            .size([width, height]);
+
+        var svg = d3.select("#mentions").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        d3.json("/dataNetworks", function(graph) {
+
+            force
+                .nodes(graph.nodes)
+                .links(graph.links)
+                .start();
+
+            var link = svg.selectAll(".link")
+                .data(graph.links)
+                .enter().append("line")
+                .attr("class", "link")
+                .style("stroke", "black")
+                .style("stroke-width", 5)
+                .style("stroke-opacity", function(d) {
+                    return d.value * 0.075;
+                });
+
+            var node = svg.selectAll(".node")
+                .data(graph.nodes)
+                .enter().append("circle")
+                .attr("class", "node")
+                .attr("r", function (d) {
+                    return 20 * d.degree_centrality
+                })
+                .style("fill", function(d) {
+                    return color(d.name);
+                })
+                .call(force.drag);
+
+            node
+                .append("title")
+                .text(function(d) {
+                    return d.name;
+                });
+
+            force.on("tick", function() {
+                link.attr("x1", function(d) {
+                        return d.source.x;
+                    })
+                    .attr("y1", function(d) {
+                        return d.source.y;
+                    })
+                    .attr("x2", function(d) {
+                        return d.target.x;
+                    })
+                    .attr("y2", function(d) {
+                        return d.target.y;
+                    });
+
+                node.attr("cx", function(d) {
+                        return d.x;
+                    })
+                    .attr("cy", function(d) {
+                        return d.y;
+                    });
+            });
+        });
+    </script>
+
+</html>

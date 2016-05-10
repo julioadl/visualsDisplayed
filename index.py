@@ -17,16 +17,27 @@ def usElections2():
     return render_template('us-elections-2.html')
 
 @app.route('/us-elections2016-3')
-def usElections3():
-    return render_template('us-elections-3.html')
-
-@app.route('/us-elections2016-4')
 def usElections4():
     return render_template('us-elections-4.html')
+
+@app.route('/us-elections2016-4')
+def usElections5():
+    return render_template('us-elections-5.html')
 
 @app.route('/data')
 def data():
     data = json.load(open('dta.json'))
+    return json.dumps(data)
+
+@app.route('/dataTopics')
+def dataTopics():
+    data = json.load(open('dtaTopics.json'))
+    return json.dumps(data)
+
+@app.route('/dataNetworks')
+def dataNetwork():
+
+    data = json.load(open('net.json'))
     return json.dumps(data)
 
 @app.route('/nikko')
