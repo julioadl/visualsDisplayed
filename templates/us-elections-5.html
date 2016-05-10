@@ -46,7 +46,7 @@
 
         var force = d3.layout.force()
             .charge(0)
-            .linkDistance(400)
+            .linkDistance(height * 0.65)
             .size([width, height]);
 
         var svg = d3.select("#mentions").append("svg")
@@ -75,7 +75,7 @@
                 .enter().append("circle")
                 .attr("class", "node")
                 .attr("r", function (d) {
-                    return 20 * d.degree_centrality
+                    return (height / 25) * d.degree_centrality
                 })
                 .style("fill", function(d) {
                     return color(d.name);
