@@ -44,5 +44,13 @@ def dataNetwork():
 def chord():
     return render_template('nikko_analysis.html')
 
+@app.route('/dynamicNet')
+def dynamicNet():
+    return render_template('dynamicNet.html')
+
+@app.route('/iframe')
+def dynamicNet():
+    return render_template('frequenciesGeneral.html')
+
 if __name__ == '__main__':
     app.run(debug = True)
