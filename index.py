@@ -49,7 +49,7 @@ def dynamicNet():
     return render_template('dynamicNet.html')
 
 @app.route('/iframe')
-def dynamicNet():
+def iframe():
     return render_template('frequenciesGeneral.html')
 
 if __name__ == '__main__':
