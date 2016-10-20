@@ -94,5 +94,5 @@ def graph_to_json():
     return json_file
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug=False, host="0.0.0.0", port="8000")
 s
