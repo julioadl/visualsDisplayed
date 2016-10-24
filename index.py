@@ -14,6 +14,10 @@ def twitterBrexit2():
     return render_template('twitter_brexit_2.html')
 
 @app.route('/twitter-brexit-3')
+def twitterBrexit3():
+    return render_template('twitter_brexit_3.html')
+
+@app.route('/twitter-brexit-4')
 def three():
     gravity = 0.4
     repetitions = 0
@@ -95,4 +99,3 @@ def graph_to_json():
 
 if __name__ == '__main__':
     app.run(debug=False, host="0.0.0.0", port="8000")
-s
